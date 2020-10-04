@@ -118,6 +118,14 @@ func Login(ctx *gin.Context) {
 		"msg":  "登录成功",
 	})
 }
+
+// Info 用户信息
+func Info(ctx *gin.Context) {
+	user, _ := ctx.Get("user")
+	ctx.JSON(http.StatusOK, gin.H{"code": 200, "data": gin.H{"user": user}})
+}
+
+// 判断手机号是否已经存在
 func isTelephoneExist(db *gorm.DB, telephone string) bool {
 	var user model.User
 	db.Where("telephone = ?", telephone).First(&user)

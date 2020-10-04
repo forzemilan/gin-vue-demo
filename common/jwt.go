@@ -40,3 +40,11 @@ func ReleaseToken(user model.User) (string, error) {
 // TODO echo eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9  | base64 -d                 -----> 			{"alg":"HS256","typ":"JWT"}
 // TODO echo 第二段 | base64 -d  ------> 		{"UserID":4,"exp":1602326678,"iat":1601721878,"iss":"gin-vue-demo","sub":"user token"}
 // TODO
+
+func ParseToken(tokenString string) (*jwt.Token, *Claims, error) {
+	claims := &Claims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (i interface{}, err error) {
+		return jwtKey, nil
+	})
+	return token, claims, err
+}
